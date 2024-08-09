@@ -14,7 +14,8 @@ cache_weather_hex=${cache_dir}/weather-hex
 cache_weather_icon=${cache_dir}/weather-icon
 
 ## Weather data
-KEY=d12714a4df8707506d6dd7688b3ccdfe
+## API by openweather
+KEY=
 ID=1642911
 LANG='id' # Language options
 UNIT='metric'	# Available options : 'metric' or 'imperial'

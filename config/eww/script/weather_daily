@@ -38,7 +38,8 @@ cache_weather_temp_min_day5=${cache_dir}/day5/weather-temp_min
 cache_weather_icon_day5=${cache_dir}/day5/weather-icon
 
 ## Weather data
-KEY=57db8ad20afe44b8a9364641242207 # API KEY
+## API by weatherapi
+KEY=                               # API KEY
 PROTOCOL='http'                    # HTTP & HTTPS
 CITY='Sawangan'                    # Your city name
 LONG='-6.369582354221924,106.7584627393399'
