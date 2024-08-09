@@ -1,0 +1,32 @@
+.music-box {
+  background: mix($base, $surface0, 60%);
+  padding-left: 10px;
+  padding-right: 5px;
+  border-radius: 5px;
+
+  .music-title {
+    font-family: JetBrainsMono Nerd Font;
+    font-weight: bold;
+    color: $text;
+  }
+
+  .control_box {
+    margin-left: 10px;
+
+    .button-prev,
+    .button-pause,
+    .button-next {
+      font-family: "Maple Mono SC NF";
+      color: $text;
+      font-weight: normal;
+    }
+    .button-pause {
+      font-size: 24px;
+    }
+
+    .button-prev,
+    .button-next {
+      font-size: 16px;
+    }
+  }
+}

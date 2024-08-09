@@ -1,0 +1,172 @@
+#!/bin/bash
+
+## Collect data
+cache_dir="$HOME/.cache/eww/weather"
+cache_weather_stat=${cache_dir}/weather-stat
+cache_weather_degree=${cache_dir}/weather-degree
+cache_weather_humid=${cache_dir}/weather-humid
+cache_weather_wind=${cache_dir}/weather-wind
+cache_weather_feels_like=${cache_dir}/feels_like
+cache_weather_temp_max=${cache_dir}/weather-temp_max
+cache_weather_temp_min=${cache_dir}/weather-temp_min
+cache_weather_quote=${cache_dir}/weather-quote
+cache_weather_hex=${cache_dir}/weather-hex
+cache_weather_icon=${cache_dir}/weather-icon
+
+## Weather data
+KEY=d12714a4df8707506d6dd7688b3ccdfe
+ID=1642911
+LANG='id' # Language options
+UNIT='metric'	# Available options : 'metric' or 'imperial'
+
+## Make cache dir
+if [[ ! -d "$cache_dir" ]]; then
+    mkdir -p ${cache_dir}
+fi
+
+## Get data
+get_weather_data() {
+    weather=$(curl -sf "http://api.openweathermap.org/data/2.5/weather?APPID="$KEY"&id="$ID"&units="$UNIT"&lang="$LANG"")
+
+    if [ ! -z "$weather" ]; then
+        weather_humid=`echo $weather | jq ".main.humidity"`
+        weather_feels_like=`echo $weather | jq ".main.feels_like" | cut -d "." -f 1`
+        weather_temp_min=`echo $weather | jq ".main.temp_min" | cut -d "." -f 1`
+        weather_temp_max=`echo $weather | jq ".main.temp_max" | cut -d "." -f 1`
+        weather_temp=`echo "$weather" | jq ".main.temp" | cut -d "." -f 1`
+        weather_wind=`echo "$weather" | jq ".wind.speed" | cut -d "." -f 1`
+        weather_icon_code=`echo "$weather" | jq -r ".weather[].icon" | head -1`
+        weather_description=`echo "$weather" | jq -r ".weather[].description" | head -1 | sed -e "s/\b\(.\)/\u\1/g"`
+
+        #Big long if statement of doom
+        if [ "$weather_icon_code" == "50d"  ]; then
+            weather_icon=""
+            weather_quote="huuaahhhh, tidur pun sedap nih"
+            weather_hex="#89dceb"
+        elif [ "$weather_icon_code" == "50n"  ]; then
+            weather_icon=""
+            weather_quote="huuaahhhh, tidur pun sedap nih"
+            weather_hex="#89dceb"
+        elif [ "$weather_icon_code" == "01d"  ]; then
+            weather_icon=""
+            weather_quote="ehh asu makan! makan asu"
+            weather_hex="#f9e2af"
+        elif [ "$weather_icon_code" == "01n"  ]; then
+            weather_icon=""
+            weather_quote="huuaahhhh, tidur pun sedap nih"
+            weather_hex="#f5c2e7"
+        elif [ "$weather_icon_code" == "02d"  ]; then
+            weather_icon=""
+            weather_quote="ehh asu makan! makan asu"
+            weather_hex="#cba6f7"
+        elif [ "$weather_icon_code" == "02n"  ]; then
+            weather_icon=""
+            weather_quote="eh asu, ngeteh! ngeteh asu"
+            weather_hex="#cba6f7"
+        elif [ "$weather_icon_code" == "03d"  ]; then
+            weather_icon=""
+            weather_quote="eh asu, ngeteh! ngeteh asu"
+            weather_hex="#cba6f7"
+        elif [ "$weather_icon_code" == "03n"  ]; then
+            weather_icon=""
+            weather_quote="dingin-dingin sa-laper euy"
+            weather_hex="#cba6f7"
+        elif [ "$weather_icon_code" == "04d"  ]; then
+            weather_icon=""
+            weather_quote="dingin-dingin sa-laper euy"
+            weather_hex="#cba6f7"
+        elif [ "$weather_icon_code" == "04n"  ]; then
+            weather_icon=""
+            weather_quote="eh asu, ngeteh! ngeteh asu"
+            weather_hex="#cba6f7"
+        elif [ "$weather_icon_code" == "09d"  ]; then
+            weather_icon=""
+            weather_quote="ehh asu makan! makan asu"
+            weather_hex="#89b4fa"
+        elif [ "$weather_icon_code" == "09n"  ]; then
+            weather_icon=""
+            weather_quote="huuaahhhh, tidur pun sedap nih"
+            weather_hex="#89b4fa"
+        elif [ "$weather_icon_code" == "10d"  ]; then
+            weather_icon=""
+            weather_quote="ehh asu makan! makan asu"
+            weather_hex="#89b4fa"
+        elif [ "$weather_icon_code" == "10n"  ]; then
+            weather_icon=""
+            weather_quote="huuaahhhh, tidur pun sedap nih"
+            weather_hex="#89b4fa"
+        elif [ "$weather_icon_code" == "11d"  ]; then
+            weather_icon=""
+            weather_quote="alamak?! ihh takutnye"
+            weather_hex="#ffeb57"
+        elif [ "$weather_icon_code" == "11n"  ]; then
+            weather_icon=""
+            weather_quote="dingin-dingin sa-laper euy"
+            weather_hex="#ffeb57"
+        elif [ "$weather_icon_code" == "13d"  ]; then
+            weather_icon=""
+            weather_quote="It's gonna snow today \nYou'd better wear thick clothes and make a snowman as well!"
+            weather_hex="#e3e6fc"
+        elif [ "$weather_icon_code" == "13n"  ]; then
+            weather_icon=""
+            weather_quote="It's gonna snow tonight \nMake sure you get up early tomorrow to see the sights..."
+            weather_hex="#e3e6fc"
+        elif [ "$weather_icon_code" == "40d"  ]; then
+            weather_icon=""
+            weather_quote="Cuaca mengatakan hari ini berkabut \nJaga-jaga kamu tidak tersesat ke jalannya..."
+            weather_hex="#89dceb"
+        elif [ "$weather_icon_code" == "40n"  ]; then
+            weather_icon=""
+            weather_quote="ini buktinya 🤣"
+            weather_hex="#89dceb"
+        else
+            weather_icon=""
+            weather_quote="huuaahhhh, tidur pun sedap nih"
+            weather_hex="#cba6f7"
+        fi
+        echo "$weather_icon" >  ${cache_weather_icon}
+        echo "$weather_description" > ${cache_weather_stat}
+        echo "$weather_temp""°C" > ${cache_weather_degree}
+        echo "$weather_humid" > ${cache_weather_humid}
+        echo "$weather_wind" > ${cache_weather_wind}
+        echo " $weather_temp_min""°C" > ${cache_weather_temp_min}
+        echo " $weather_temp_max""°C" > ${cache_weather_temp_max}
+        echo "$weather_feels_like" > ${cache_weather_feels_like}
+        echo -e "$weather_quote" > ${cache_weather_quote}
+        echo "$weather_hex" > ${cache_weather_hex}
+    else
+        echo "Weather Unavailable" > ${cache_weather_stat}
+        echo "" > ${cache_weather_icon}
+        echo -e "lohh gak ada" > ${cache_weather_quote}
+        echo "-" > ${cache_weather_humid}
+        echo "-" > ${cache_weather_wind}
+        echo "-" > ${cache_weather_temp_min}
+        echo "-" > ${cache_weather_temp_max}
+        echo "-" > ${cache_weather_degree}
+        echo "#cba6f7" > ${cache_weather_hex}
+    fi
+}
+
+## Execute
+get_weather_data
+if [[ "$1" == "--icon" ]]; then
+    cat ${cache_weather_icon}
+elif [[ "$1" == "--temp" ]]; then
+    cat ${cache_weather_degree}
+elif [[ "$1" == "--wind" ]]; then
+    cat ${cache_weather_wind}
+elif [[ "$1" == "--humid" ]]; then
+    cat ${cache_weather_humid}
+elif [[ "$1" == "--feels_like" ]]; then
+    cat ${cache_weather_feels_like}
+elif [[ "$1" == "--temp_min" ]]; then
+    cat ${cache_weather_temp_min}
+elif [[ "$1" == "--temp_max" ]]; then
+    cat ${cache_weather_temp_max}
+elif [[ "$1" == "--hex" ]]; then
+    cat ${cache_weather_hex}
+elif [[ "$1" == "--stat" ]]; then
+    cat ${cache_weather_stat}
+elif [[ "$1" == "--quote" ]]; then
+    cat ${cache_weather_quote} | head -n1
+fi

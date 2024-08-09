@@ -1,0 +1,10 @@
+(defwidget power []
+  (eventbox  :cursor "pointer" :onhover "${eww} update power_rev=true" :onhoverlost "${eww} update power_rev=false"
+    (box :class "power_box" :orientation "h" :space-evenly false 
+      (revealer :transition "slideright" :reveal power_rev :duration "550ms"
+        (box :orientation "h" :space-evenly false
+          (button :class "reboot" :tooltip "Reboot" :onclick `~/.config/eww/script/power_options --reboot` "󰦛")
+          (button :class "sleep" :tooltip "Sleep/Suspend" :onclick `~/.config/eww/script/power_options --sleep` "󰒲")
+          (button :class "logout" :tooltip "Logout" :onclick `~/.config/eww/script/power_options --logout` "")
+          (button :class "lock" :tooltip "Lock" :onclick `~/.config/eww/script/power_options --lock` "")))
+      (button :class "poweroff" :tooltip "Shutdown" :onclick `~/.config/eww/script/power_options --shutdown` "󰐥"))))

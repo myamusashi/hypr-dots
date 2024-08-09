@@ -1,0 +1,4 @@
+(defwidget sys_info []
+  (box :class "system" :spacing 10 :orientation "h" :space-evenly false
+    (label :class "cpu" :text " ${cpu}%")
+    (label :class "mem" :text " ${mem}")))

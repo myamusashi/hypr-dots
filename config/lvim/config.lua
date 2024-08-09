@@ -1,0 +1,13 @@
+-- User options reload
+reload "user.colorscheme"
+reload "user.keymappins"
+reload "user.formatting"
+reload "user.lualine"
+reload "user.noice"
+reload "user.notify"
+reload "user.options"
+reload "user.plugins"
+reload "todo_comments"
+reload "user.which_key"
+reload "user.lsp"
+reload "user.ftplugin.cpp"

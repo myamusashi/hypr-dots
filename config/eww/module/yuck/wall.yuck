@@ -1,0 +1,4 @@
+(defvar change_wal "~/.config/eww/script/change-wallpapers")
+
+(defwidget wall []
+    (button :style "font-size: 20px; font-family: Jetbrains Nerd Font; color: #89dceb;" :onclick change_wal ""))

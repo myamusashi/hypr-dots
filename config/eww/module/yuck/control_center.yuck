@@ -1,0 +1,4 @@
+(defwidget control_center []
+    (revealer :transition "slideleft" :reveal {open_control_center == true ? true : false} :duration "550ms" 
+        (box :orientation "v" :space-evenly false
+            (notifications))))

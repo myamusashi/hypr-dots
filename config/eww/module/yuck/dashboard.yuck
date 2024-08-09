@@ -1,0 +1,33 @@
+(defwidget dashboard []
+  (box :class "dashboard_widget" :orientation "h" :halign "start"
+    (left_start)))
+
+(defwidget left_start []
+  (box :orientation "v" :space-evenly false
+    (speaker_mic)
+    (bright_cpu)))
+
+(defwidget speaker_mic []
+  (box :class "box-box" :orientation "h" :space-evenly false
+    (box :orientation "v" :space-evenly false
+      (label :class "speaker_icon" :text audio_icon)
+      (scale :class "speaker-bar" :value audio :orientation "v" :flipped true :tooltip "Volume: ${audio}%" :max 101 :min 0 :onchange `amixer -D pulse sset Master {}%`))
+    (box :orientation "v" :space-evenly false
+      (label :class "mic_icon" :text mic_icon)
+      (scale :class "mic-bar" :value mic :orientation "v" :flipped true :tooltip "Volume: ${mic}%" :max 101 :min 0 :onchange `amixer -D pulse sset Capture {}%`))))
+
+(defwidget bright_cpu []
+  (box :orientation "h"
+    (box :class "bright_box" :orientation "v" :space-evenly false
+      (label :class "bright_icon" :text "󰃠")
+      (scale :class "brightness-bar" :value brightness :orientation "v" :flipped true :tooltip "Cahaya: ${brightness}%" :max 101 :min 0 :onchange `brightnessctl s {}%`))
+    (box :class "cpu_temp" :orientation "v" :space-evenly false
+      (box :orientation "v" :space-evenly false
+        (label :class "cpu_fan_icon" :text "󰈐")
+        (label :class "cpu_desc" :text "CPU Fan")
+        (label :class "cpu_fan_speed" :text "${fan_speed} RPM"))
+      (box :orientation "v" :space-evenly false 
+        (label :class "cpu_temp-icon" :text "")
+        (label :class "cpu_temp_desc" :text "CPU Temp")
+        (label :class "cpu_temp_text" :text "${cpu_temp}󰔄")))))
+

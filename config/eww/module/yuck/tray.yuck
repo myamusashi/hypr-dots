@@ -1,0 +1,6 @@
+(defwidget tray []
+  (eventbox :onhover "${eww} update tray_rev=true" :onhoverlost "${eww} update tray_rev=false"
+    (box :class "tray_box" :orientation "h" :space-evenly false
+      (revealer :transition "slideright" :reveal tray_rev :duration "550ms"
+        (systray :icon-size 18))
+      (label :class "tray" :text ""))))

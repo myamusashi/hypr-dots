@@ -1,0 +1,10 @@
+(defwidget pkg_update []
+  (eventbox :class "packages_widgets" :cursor "pointer" :onclick "~/.config/eww/script/toggle_updates"
+    (label :class "packages ${packages_update == " No new updates" ? "no_update"  : ""}" :text packages_update)))
+
+(defwidget update_widget [] 
+  (revealer :transition "slidedown" :reveal { update_rev == true ? true : false } :duration "300ms"
+    (box :orientation "h" :class "update-list" :spacing 5 :space-evenly false 
+      (label :class "name-package" :text name_package)
+      (label :class "old-version" :text old_version_package)
+      (label :class "new-version" :text new_version_package))))

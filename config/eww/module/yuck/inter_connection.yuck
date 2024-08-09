@@ -1,0 +1,7 @@
+(defwidget internet []
+  (box :class "internet_box ${internet == " INTERNET 404!" ? "disconnect" : ""}" 
+    (label :class "connection" :text internet)))
+
+(defwidget internet_widget []
+  (box :class "internet_widget-box" :orientation "h" :space-evenly false 
+    (label :class "eth-box" )))

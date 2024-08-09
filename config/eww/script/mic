@@ -1,0 +1,7 @@
+#!/bin/bash
+
+pamixer --default-source --get-volume-human | tr -d '%'
+
+pactl subscribe | rg --line-buffered "on sink" | while read -r _; do
+  pamixer --default-source --get-volume-human | tr -d '%'
+done

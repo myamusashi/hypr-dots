@@ -1,0 +1,30 @@
+.packages_widgets {
+  @include hover_button;
+}
+
+.packages {
+  font-size: 14px;
+  color: $yellow;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.no_update {
+  color: $green;
+}
+
+.update-list {
+  background: $base;
+  min-width: 550px;
+  padding: 10px;
+
+  .name-package {
+    color: $text;
+  }
+  .old-version {
+    color: $yellow;
+  }
+  .new-version {
+    color: $green;
+  }
+}

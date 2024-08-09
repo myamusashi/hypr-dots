@@ -1,0 +1,9 @@
+@mixin hover_button {
+  padding-right: 5px;
+  padding-left: 5px;
+  border-radius: 5px;
+  transition: 0.3s ease;
+  &:hover {
+    background: transparentize($overlay2, 0.6);
+  }
+}

@@ -1,0 +1,13 @@
+.internet_box {
+  background: $yellow;
+  padding: 0 5px;
+  border-radius: 5px;
+
+  &.disconnect {
+    background: $red;
+  }
+
+  .connection {
+    color: $crust;
+  }
+}

@@ -1,0 +1,17 @@
+.audio_button {
+  color: $mauve;
+  font-size: 16px;
+}
+
+.volume_speaker-bar trough highlight {
+  background-color: $sapphire;
+  border-radius: 5px;
+}
+
+scale trough {
+  background-color: $text;
+  border-radius: 30px;
+  min-height: 10px;
+  min-width: 100px;
+  margin: 0.1rem 0 0.1rem 0;
+}

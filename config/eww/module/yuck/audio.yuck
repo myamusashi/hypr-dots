@@ -1,0 +1,22 @@
+(defwidget audiomic []
+    (box :orientation "h" :spacing 10 :space-evenly false
+      (volum)
+      (mic)))
+
+(defwidget volum []
+  (eventbox :cursor "pointer" :onclick "${eww} update audio_vol=true" :onhoverlost "${eww} update audio_vol=false"
+    (box :orientation "h" :space-evenly false :spacing 2
+      (revealer :transition "slideleft" :reveal audio_vol :duration "350ms"
+        (box :class "volume_box" :space-evenly false :spacing 5
+          (label :class "audio_button" :text "${audio}%")
+          (scale :class "volume_speaker-bar" :value audio :orientation "h" :flipped false :tooltip "Volume: ${audio}%" :max 101 :min 0 :onchange `amixer -D pulse sset Master {}%`)))
+      (label :class "audio_button" :style "font-size: 24px;" :text audio_icon))))
+
+(defwidget mic []
+  (eventbox :cursor "pointer" :onclick "${eww} update mic_vol=true" :onhoverlost "${eww} update mic_vol=false"
+    (box :orientation "h" :space-evenly false :spacing 5
+      (revealer :transition "slideleft" :reveal mic_vol :duration "350ms"
+        (box :space-evenly false :spacing 5
+          (label :class "audio_button" :text "${mic}%")
+          (scale :class "volume_speaker-bar" :value mic :orientation "h" :flipped false :tooltip "Volume: ${mic}%" :max 101 :min 0 :onchange `amixer -D pulse sset Capture {}%`)))
+      (label :class "audio_button" :style "font-size: 24px;" :text mic_icon))))

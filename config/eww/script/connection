@@ -1,0 +1,19 @@
+#!/bin/bash
+
+internet_connection=$(~/.config/eww/script/internet_connection)
+
+wlan_state=$(connmanctl technologies | grep -A 5 '/wifi' | awk '/Connected/ {print $3}')
+eth_state=$(connmanctl technologies | grep -A 5 '/ethernet' | awk '/Connected/ {print $3}')
+
+eth_name=$(connmanctl technologies | grep -A 5 '/ethernet' | awk '/Name/ {print $3}')
+wlan_name=$(connmanctl services | grep '^\*AO' | awk '{print $2" "$3;}' | sed 's/^ *//')
+
+if [[ "$eth_state" == "True" ]] && [[ "$wlan_state" == "True" ]] && [[ "$internet_connection" == "Found" ]]; then
+  echo " $eth_name"
+elif [[ "$eth_state" == "True" ]] && [[ "$internet_connection" == "Found" ]]; then
+  echo " $eth_name"
+elif [[ "$wlan_state" == "True" ]] && [[ "$internet_connection" == "Found" ]]; then
+  echo " $wlan_name"
+else
+  echo " INTERNET 404!"
+fi

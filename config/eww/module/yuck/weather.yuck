@@ -1,0 +1,70 @@
+(defwidget weather []
+  (box :class "weather-bar" :spacing 5 :space-evenly false
+    (label :class "weather-icon" :style "color: ${weather-hex};" :text weather-icon-current)
+    (label :class "weather-location" :text "Depok")
+    (label :class "weather-temp" :text "${weather-temp-current}")))
+
+(defwidget weather_widget []
+  (box :class "weather_widget" :orientation "v" :vexpand false :space-evenly false
+    (weather-current_widget)
+    (weather-forecast-widget)))
+
+(defwidget weather-current_widget []
+  (box :orientation "h" :spacing 10 :space-evenly false :halign "center"
+    (label :class "weather_widget-environment-condition" :text weather-icon-current)
+    (label :class "weather_widget-temp" :text "${weather-temp-current}")
+    (weather-current-widget-condition)))
+
+(defwidget weather-current-widget-condition []
+  (box :orientation "v" :valign "center" :space-evenly false
+    (label :class "weather_widget-condition" :text weather-stat-current)
+    (box :orientation "h" :halign "center" :spacing 7 :space-evenly false
+      (box :spacing 1 :space-evenly false
+        (label :class "weather_widget-wind_speed" :style "font-size: 24px;" :text "")
+        (label :class "weather_widget-wind_speed" :text "${weather-wind_speed-current}")
+        (label :class "weather_widget-wind_speed" :style "font-size: 11px;" :text "km/h"))
+      (box :spacing 1 :space-evenly false
+        (label :class "weather_widget-wind_direction" :style "font-size: 24px;" :text "")
+        (label :class "weather_widget-wind_direction" :tooltip weather-wind_direction_tooltip :text "${weather-wind_direction-current}"))
+      (box :spacing 1 :space-evenly false
+        (label :class "weather_widget-humid" :style "font-size: 30px;" :text "")
+        (label :class "weather_widget-humid" :text "${weather-humid-current}")
+        (label :class "weather_widget-humid" :style "font-size: 11px;" :text "%")))))
+
+(defwidget weather-forecast-widget []
+  (box :spacing 10 :orientation "h"
+    (weather_forecast-day1)
+    (weather_forecast-day2)
+    (weather_forecast-day3)))
+    ;; (weather_forecast-day4)
+    ;; (weather_forecast-day5)
+
+(defwidget weather_forecast-day1 []
+  (box :orientation "v" :space-evenly false
+    (label :class "weather_forecast-label" :style "font-size: 44px;" :text weather-icon-day1)
+    (label :class "weather_forecast-label" :text "${weather-temp_min-day1}/${weather-temp_max-day1}")
+    (label :class "weather_forecast-label" :text day1)))
+
+(defwidget weather_forecast-day2 []
+  (box :orientation "v" :space-evenly false
+    (label :class "weather_forecast-label" :style "font-size: 44px;" :text weather-icon-day2)
+    (label :class "weather_forecast-label" :text "${weather-temp_min-day2}/${weather-temp_max-day2}")
+    (label :class "weather_forecast-label" :text day2)))
+
+(defwidget weather_forecast-day3 []
+  (box :orientation "v" :space-evenly false
+    (label :class "weather_forecast-label" :style "font-size: 44px;" :text weather-icon-day3)
+    (label :class "weather_forecast-label" :text "${weather-temp_min-day3}/${weather-temp_max-day3}")
+    (label :class "weather_forecast-label" :text day3)))
+
+;; (defwidget weather_forecast-day4 []
+;;   (box :orientation "v" :space-evenly false
+;;     (label :class "weather_forecast-label" :style "font-size: 44px;" :text weather-icon-day4)
+;;     (label :class "weather_forecast-label" :text "${weather-temp_min-day4}/${weather-temp_max-day4}")
+;;     (label :class "weather_forecast-label" :text day4)))
+
+;; (defwidget weather_forecast-day5 []
+;;   (box :orientation "v" :space-evenly false
+;;     (label :class "weather_forecast-label" :style "font-size: 44px;" :text weather-icon-day5)
+;;     (label :class "weather_forecast-label" :text "${weather-temp_min-day5}/${weather-temp_max-day5}")
+;;     (label :class "weather_forecast-label" :text day5)))

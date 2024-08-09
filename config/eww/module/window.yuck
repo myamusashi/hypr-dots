@@ -1,0 +1,50 @@
+(defwindow bar
+  :monitor 1
+  :exclusive true
+  :geometry (geometry :width "100%"
+                      :height "2%"
+                      :anchor "top center")
+(bar))
+
+(defwindow window-package
+  :monitor 1
+  :namespace "eww"
+  :focusable false
+  :stacking "overlay"
+  :geometry (geometry :x "90px"
+                      :anchor "top left")
+(update_widget))
+
+(defwindow control_center
+  :monitor 0
+  :stacking "overlay"
+  :geometry (geometry :anchor "bottom right")
+(control_center))
+
+(defwindow notifications_popup
+  :monitor 0
+  :stacking "overlay"
+  :geometry (geometry :anchor "bottom right")
+(notifications_popup_widget))
+
+(defwindow notifications_popup1
+  :monitor 1
+  :stacking "overlay"
+  :geometry (geometry :y 2 
+                      :anchor "bottom right")
+(notifications_popup_widget))
+
+(defwindow weather-widget 
+  :monitor 1
+  :stacking "bottom"
+  :namespace "eww"
+  :geometry (geometry :y 20 
+                      :anchor "top center")
+(weather_widget))
+
+(defwindow calendar
+  :monitor 1
+  :namespace "eww"
+	:geometry (geometry  
+                      :anchor "top right")
+(cal))

@@ -1,0 +1,12 @@
+(defwidget time []
+  (eventbox :onhover "${eww} update date_rev=true" :onhoverlost "${eww} update date_rev=false"
+    (box :class "time" :orientation "h" :space-evenly false
+      (revealer :transition "slideright" :reveal date_rev :duration "550ms"
+        (button :class "date" :onclick "~/.config/eww/script/toggle_calendar" date))
+      (label :class "date" :text hour))))
+
+(defwidget cal []
+	(revealer :transition "slidedown" :reveal { cal_rev == true ? true : false } :duration "300ms"
+    (box :class "cal" :orientation "v"
+	    (box :class "cal-in"
+	      (calendar :class "cal" :day calendar_day :year calendar_year)))))

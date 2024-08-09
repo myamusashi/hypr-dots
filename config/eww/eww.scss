@@ -1,0 +1,25 @@
+* {
+  all: unset;
+  font-family: JetBrainsMono Nerd Font Mono;
+}
+
+@import "colors/mocha.scss";
+@import "scss/lib.scss";
+
+@import "scss/control_center.scss";
+@import "scss/notifications.scss";
+@import "scss/notifications_popup.scss";
+@import "scss/bar.scss";
+@import "scss/time.scss";
+@import "scss/tray.scss";
+@import "scss/audio.scss";
+@import "scss/music.scss";
+@import "scss/system.scss";
+@import "scss/battery.scss";
+@import "scss/package.scss";
+@import "scss/internet.scss";
+@import "scss/weather.scss";
+@import "scss/brightness.scss";
+@import "scss/warp.scss";
+@import "scss/power.scss";
+@import "scss/workspace.scss";

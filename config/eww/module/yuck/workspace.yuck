@@ -1,0 +1,9 @@
+(defwidget workspaces []
+  (eventbox :class "workspaces-widget" :onscroll "~/.config/eww/script/change-active-workspace {} ${current_workspace}"
+    (box :space-evenly true
+      (label :text "${workspaces}${current_workspace}" :visible false)
+      (for workspace in workspaces
+        (eventbox :cursor "pointer" :onclick "hyprctl dispatch workspace ${workspace.id}"
+          (box :class "workspace-entry"
+            (label :class "workspaces-text ${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}" :text "${workspace.windows > 0 ? "" : ""}"))))))) 
+

@@ -1,0 +1,13 @@
+(defwidget music []
+  (eventbox :onhover "${eww} update control=true" :onhoverlost "${eww} update control=false"
+  (box :class "music-box" :orientation "h" :space-evenly false 
+    ;; (image :path spotify_art :image-width 22 :image-height 22 :style "margin-right: 10px;")
+    (label :class "music-title" :text spotify :limit-width 70)
+    (revealer :transition "slideleft" :reveal control :duration "550ms"
+      (box :class "control_box" :spacing 10 :space-evenly false :vexpand false :hexpand false
+        (eventbox :cursor "pointer" :onclick "~/.config/eww/script/spotify_script/spotify-previous.sh"
+          (label :class "button-prev" :text ""))
+        (eventbox :cursor "pointer" :onclick "~/.config/eww/script/spotify_script/spotify-pause.sh" 
+          (label :class "button-pause" :text STATUS))
+        (eventbox :cursor "pointer" :onclick "~/.config/eww/script/spotify_script/spotify-next.sh"
+          (label :class "button-next" :text "")))))))

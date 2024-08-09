@@ -1,0 +1,17 @@
+#!/bin/bash
+
+internet=$(~/.config/eww/script/internet_connection)
+check_packages=$(checkupdates | awk '/->/ { count++ } END { print count + 0 }')
+
+case "$internet" in
+"Found")
+	if [ "$check_packages" -eq 0 ]; then
+		echo " No new updates"
+	else
+		echo " $check_packages New updates"
+	fi
+	;;
+"Not found")
+	echo "No internet!"
+	;;
+esac

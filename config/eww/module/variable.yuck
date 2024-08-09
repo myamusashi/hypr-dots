@@ -1,0 +1,104 @@
+;;** Clock & Calender ***************************
+(defpoll calendar_day :interval "20h" "date '+%d'")
+(defpoll calendar_year :interval "20h" "date '+%Y'")
+(defpoll hour :interval "30s" :initial "" `date "+%I:%M%P"`)
+(defpoll date :interval "6h" :initial "" `date "+%a %d/%m/%y, "`)
+
+;;** Battery ***************************
+(defpoll battery :interval "30s"	"~/.config/eww/script/battery icon")
+(defpoll battery-cappacity :interval "5s"	"~/.config/eww/script/battery percent")
+(defpoll battery_1 :interval "30s"	"~/.config/eww/script/battery_1 icon")
+(defpoll battery-cappacity_1 :interval "5s"	"~/.config/eww/script/battery_1 percent")
+
+;;** System ***************************
+(defpoll cpu :interval "2s" "~/.config/eww/script/sys_info --cpu")
+(defpoll mem :interval "2s" "~/.config/eww/script/sys_info --mem")
+(defpoll internet :interval "1m" `~/.config/eww/script/connection`)
+(defpoll audio_icon :interval "3s" "~/.config/eww/script/audio_mic --get-sound-icon")
+(defpoll mic_icon :interval "3s" "~/.config/eww/script/audio_mic --get-mic-icon")
+(defpoll fan_speed :interval "5s" `sensors | grep "fan1" | awk {'print $2'}`)
+(defpoll cpu_temp :interval "5s" `sensors | grep "CPU" | awk {'print $2'}`)
+(deflisten mic :initial "{}" `~/.config/eww/script/mic`)
+(deflisten audio :initial "{}" `~/.config/eww/script/vol`)
+(defpoll brightness :interval "1s" `brightnessctl i | grep "Current brightness" | awk '{print $4}' | tr -d '[()%]'`)
+
+;;** Spotify ***************************
+(defpoll spotify :interval "1s" "~/.config/eww/script/spotify")
+;; (defpoll spotify_art :interval "1s" "~/.config/eww/script/spotify_artwork")
+(defpoll STATUS :interval "1s" `~/.config/eww/script/spotify_script/spotify-status.sh`)
+
+;;** Pacman Updates ***************************
+(defpoll packages_update :interval "1m" "~/.config/eww/script/pacman_updates")
+(defpoll name_package :interval "6m" `cat ~/.config/eww/script/data/package.txt`) 
+(defpoll old_version_package :interval "6m" `cat ~/.config/eww/script/data/old_package.txt`) 
+(defpoll new_version_package :interval "6m" `cat ~/.config/eww/script/data/new_package.txt`) 
+
+;;** Weather Info ***************************
+;; (defpoll weather-icon :interval "15m" `~/.config/eww/script/weather_info --icon`)
+;; (defpoll weather-temp :interval "15m" `~/.config/eww/script/weather_info --temp`)
+(defpoll weather-hex :interval "15m" `~/.config/eww/script/weather_info --hex`)
+
+;;** Weather Dailys Info ***************************
+(defpoll weather-humid-current :interval "17m" `cat ~/.cache/eww/weather_daily/current/weather-humid`)
+(defpoll weather-icon-current :interval "17m" `cat ~/.cache/eww/weather_daily/current/weather-icon`)
+(defpoll weather-stat-current :interval "17m" `cat ~/.cache/eww/weather_daily/current/weather-stat`)
+(defpoll weather-temp-current :interval "17m" `cat ~/.cache/eww/weather_daily/current/weather-temp`)
+(defpoll weather-wind_direction-current :interval "17m" `cat ~/.cache/eww/weather_daily/current/weather-wind_direction`)
+(defpoll weather-wind_speed-current :interval "17m" `cat ~/.cache/eww/weather_daily/current/weather-wind_speed`)
+(defpoll weather-wind_direction_tooltip :interval "17m" `cat ~/.cache/eww/weather_daily/current/weather-wind_direction_tooltip`)
+
+;; Day 1
+(defpoll weather-icon-day1 :interval "17m" `cat ~/.cache/eww/weather_daily/day1/weather-icon`)
+(defpoll weather-temp_max-day1 :interval "17m" `cat ~/.cache/eww/weather_daily/day1/weather-temp_max`)
+(defpoll weather-temp_min-day1 :interval "17m" `cat ~/.cache/eww/weather_daily/day1/weather-temp_min`)
+
+;; Day 2
+(defpoll weather-icon-day2 :interval "17m" `cat ~/.cache/eww/weather_daily/day2/weather-icon`)
+(defpoll weather-temp_max-day2 :interval "17m" `cat ~/.cache/eww/weather_daily/day2/weather-temp_max`)
+(defpoll weather-temp_min-day2 :interval "17m" `cat ~/.cache/eww/weather_daily/day2/weather-temp_min`)
+
+;; Day 3
+(defpoll weather-icon-day3 :interval "17m" `cat ~/.cache/eww/weather_daily/day3/weather-icon`)
+(defpoll weather-temp_max-day3 :interval "17m" `cat ~/.cache/eww/weather_daily/day3/weather-temp_max`)
+(defpoll weather-temp_min-day3 :interval "17m" `cat ~/.cache/eww/weather_daily/day3/weather-temp_min`)
+
+;; Day 4
+;; (defpoll weather-icon-day4 :interval "17m" `cat ~/.cache/eww/weather_daily/day4/weather-icon`)
+;; (defpoll weather-temp_max-day4 :interval "17m" `cat ~/.cache/eww/weather_daily/day4/weather-temp_max`)
+;; (defpoll weather-temp_min-day4 :interval "17m" `cat ~/.cache/eww/weather_daily/day4/weather-temp_min`)
+
+;; ;; Day 5
+;; (defpoll weather-icon-day5 :interval "17m" `cat ~/.cache/eww/weather_daily/day5/weather-icon`)
+;; (defpoll weather-temp_max-day5 :interval "17m" `cat ~/.cache/eww/weather_daily/day5/weather-temp_max`)
+;; (defpoll weather-temp_min-day5 :interval "17m" `cat ~/.cache/eww/weather_daily/day5/weather-temp_min`)
+
+;; Forecast Days
+(defpoll day1 :interval "12h" `date +"%a"`)
+(defpoll day2 :interval "12h" `date +"%a" -d "+1 days"`)
+(defpoll day3 :interval "12h" `date +"%a" -d "+2 days"`)
+;; (defpoll day4 :interval "12h" `date +"%a" -d "+3 days"`)
+;; (defpoll day5 :interval "12h" `date +"%a" -d "+4 days"`)
+
+;;** Workspaces ***************************
+(deflisten workspaces :initial "[]" `~/.config/eww/script/get-workspaces`)
+(deflisten current_workspace :initial "{}" `~/.config/eww/script/get-active-workspace`)
+
+;;** Notifications *************************** 
+(deflisten notifications :initial '{"count": 0, "notifications": [], "popups": []}' `~/.config/eww/script/notifications.sh current`)
+
+;;** Variable Binary *************************** 
+(defvar eww "~/.local/bin/eww -c ~/.config/eww/")
+
+;;** Reveal widget ***************************
+(defvar open_control_center false)
+(defvar update_rev false)
+(defvar mic_vol false)
+(defvar audio_vol false)
+(defvar power_rev false)
+(defvar date_rev false)
+(defvar cal_rev false)
+(defvar tray_rev false)
+(defvar control false)
+(defvar brightness_rev false)
+(defvar window-mic_audio false)
+(defvar dashboard false)

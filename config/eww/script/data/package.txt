@@ -1,0 +1,5 @@
+  aquamarine-git:
+  code:
+  hypridle-git:
+  hyprlock-git:
+  mpg123:

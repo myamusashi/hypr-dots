@@ -1,0 +1,4 @@
+(defpoll up :interval "1m" "uptime -p | sed 's/up //'")
+
+(defwidget uptime []
+  (label :style "font-family: Jetbrains Nerd Font; font-size: 14px; color: #89b4fa;" :text "󰔚  ${up}"))

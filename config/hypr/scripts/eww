@@ -1,0 +1,8 @@
+#!/bin/bash
+
+eww kill
+sleep 2
+eww daemon
+sleep 3
+eww open bar
+eww open weather-widget

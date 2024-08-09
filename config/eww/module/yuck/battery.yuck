@@ -1,0 +1,4 @@
+(defwidget battery []
+  (box :class "box_battery" :orientation "h" :space-evenly false
+    (label :class "battery-icon" :text "${battery}" :tooltip "Battery: ${battery-cappacity}%")
+    (label :class "battery-icon" :text battery_1 :tooltip "Battery: ${battery-cappacity_1}%")))

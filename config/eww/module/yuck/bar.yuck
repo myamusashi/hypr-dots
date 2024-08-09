@@ -1,0 +1,31 @@
+(defwidget bar []
+  (box :class "bar" :orientation "h"
+    (centerbox :orientation "h"
+      (left)
+      (center)
+      (right))))
+
+(defwidget left []
+  (box :class "left-section" :orientation "h" :spacing 10 :space-evenly false :halign "start"
+    (power)
+    (workspaces)
+    (pkg_update)
+    (uptime)))
+
+(defwidget center []
+  (box :class "center-section" :orientation "h" :space-evenly false :halign "center" 
+    (weather)
+    (music)))
+
+(defwidget right []
+  (box :class "right-section" :orientation "h" :spacing 8 :space-evenly false :halign "end"
+    (brightness_control)
+    (audiomic)
+    (warp)
+    (internet)
+    (sys_info)
+    (battery)
+    (wall)
+    (time)
+    (tray)))
+

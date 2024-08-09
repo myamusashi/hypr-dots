@@ -1,0 +1,8 @@
+(defwidget brightness_control []
+  (eventbox :cursor "pointer" :onclick "${eww} update brightness_rev=true" :onhoverlost "${eww} update brightness_rev=false"
+    (box :orientation "h" :space-evenly false :spacing 2
+      (revealer :transition "slideleft" :reveal brightness_rev :duration "350ms"
+        (box :spacing 8 :space-evenly false
+          (label :class "brightness_text" :text "${brightness}%")
+          (scale :class "brightness-bar" :value brightness :orientation "h" :flipped false :tooltip "Cahaya: ${brightness}%" :max 101 :min 0 :onchange `brightnessctl s {}%`)))
+      (label :class "brightness_icon" :text " "))))

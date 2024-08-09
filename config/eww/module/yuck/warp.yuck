@@ -1,0 +1,6 @@
+(defpoll warp_status :interval "1m" `warp-cli status | awk '{print $3}'`)
+
+(defwidget warp []
+  (box :class "warp ${warp_status != "Connected" ? "disconnect" : ""}" :space-evenly false
+    (label :class "warp_text" :style "font-size: 25px;" :text " ")
+    (label :class "warp_text" :text "Warp ${warp_status}")))

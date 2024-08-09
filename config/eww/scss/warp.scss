@@ -1,0 +1,15 @@
+.warp {
+  padding-right: 5px;
+  padding-left: 5px;
+  border-radius: 5px;
+  background: $yellow;
+
+  &.disconnect {
+    background: $red;
+  }
+}
+
+.warp_text {  
+  color: $crust;
+  font-size: 13px;
+}

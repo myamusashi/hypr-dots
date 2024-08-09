@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Options
+shutdown="--shutdown"
+reboot="--reboot"
+sleep="--sleep"
+lock="--lock"
+logout="--logout"
+
+case $1 in
+  $shutdown)
+    loginctl poweroff
+  ;;
+  $reboot)
+    loginctl reboot 
+  ;;
+  $sleep)
+    loginctl suspend 
+  ;;
+  $lock)
+    hyprlock
+  ;;
+  $logout)
+    hyprctl dispatch exit
+  ;;
+esac

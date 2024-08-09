@@ -1,0 +1,8 @@
+.system {
+  margin-right: 10px;
+  .cpu { color: $red; }
+  .mem { color: $yellow; }
+  
+  .cpu,
+  .mem { font-family: JetBrainsMono Nerd Font; }
+}

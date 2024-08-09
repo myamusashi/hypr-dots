@@ -1,0 +1,249 @@
+#!/bin/bash
+
+## Directory cache weather
+cache_dir="/home/gilang/.cache/eww/weather_daily"
+
+## Current
+cache_weather_temp_current=${cache_dir}/current/weather-temp
+cache_weather_stat_current=${cache_dir}/current/weather-stat
+cache_weather_wind_speed_current=${cache_dir}/current/weather-wind_speed
+cache_weather_wind_direction_current=${cache_dir}/current/weather-wind_direction
+cache_weather_tooltip_wind_direction_current=${cache_dir}/current/weather-wind_direction_tooltip
+cache_weather_humid_current=${cache_dir}/current/weather-humid
+cache_weather_icon_current=${cache_dir}/current/weather-icon
+
+## Day 1
+cache_weather_temp_max_day1=${cache_dir}/day1/weather-temp_max
+cache_weather_temp_min_day1=${cache_dir}/day1/weather-temp_min
+cache_weather_icon_day1=${cache_dir}/day1/weather-icon
+
+## Day 2
+cache_weather_temp_max_day2=${cache_dir}/day2/weather-temp_max
+cache_weather_temp_min_day2=${cache_dir}/day2/weather-temp_min
+cache_weather_icon_day2=${cache_dir}/day2/weather-icon
+
+## Day 3
+cache_weather_temp_max_day3=${cache_dir}/day3/weather-temp_max
+cache_weather_temp_min_day3=${cache_dir}/day3/weather-temp_min
+cache_weather_icon_day3=${cache_dir}/day3/weather-icon
+
+## Day 4
+cache_weather_temp_max_day4=${cache_dir}/day4/weather-temp_max
+cache_weather_temp_min_day4=${cache_dir}/day4/weather-temp_min
+cache_weather_icon_day4=${cache_dir}/day4/weather-icon
+
+## Day 5
+cache_weather_temp_max_day5=${cache_dir}/day5/weather-temp_max
+cache_weather_temp_min_day5=${cache_dir}/day5/weather-temp_min
+cache_weather_icon_day5=${cache_dir}/day5/weather-icon
+
+## Weather data
+KEY=57db8ad20afe44b8a9364641242207 # API KEY
+PROTOCOL='http'                    # HTTP & HTTPS
+CITY='Sawangan'                    # Your city name
+LONG='-6.369582354221924,106.7584627393399'
+FORCAST_DAYS=5   # How many Forecast you wanted
+AIR_QUALITY="no" # Enable or disable air quality
+ALERTS="no"      # IDK
+
+## Make cache dir if not make it
+if [[ ! -d "$cache_dir" ]]; then
+    mkdir -p ${cache_dir}
+fi
+
+get_full_length_wind_direction() {
+    case $1 in
+    "N")
+        echo "North/Utara"
+        ;;
+    "NNE")
+        echo "North North East/Utara Timur Laut"
+        ;;
+    "NE")
+        echo "North East/Timur Laut"
+        ;;
+    "ENE")
+        echo "East North East/Timur-Timur Laut"
+        ;;
+    "E")
+        echo "East/Timur"
+        ;;
+    "ESE")
+        echo "East South East/Timur-Tenggara"
+        ;;
+    "SE")
+        echo "South East/Tenggara"
+        ;;
+    "SSE")
+        echo "South South East/ Selatan-Tenggara"
+        ;;
+    "S")
+        echo "South/Selatan"
+        ;;
+    "SSW")
+        echo "South South West/Selatan-Barat Daya"
+        ;;
+    "SW")
+        echo "South West/Barat Daya"
+        ;;
+    "WSW")
+        echo "West South West/Barat-Barat Daya"
+        ;;
+    "W")
+        echo "West/Barat"
+        ;;
+    "WNW")
+        echo "West North West/Barat-Barat Laut"
+        ;;
+    "NW")
+        echo "North West/Barat Laut"
+        ;;
+    "NNW")
+        echo "North North West/Utara-Barat Laut"
+        ;;
+    *)
+        echo "Invalid direction/Arah tidak valid"
+        ;;
+    esac
+}
+
+
+get_icon_weather() {
+    local check_date=$(date "+%H" | sed 's/^0*//')
+    case "$1" in
+    "1000")
+        if [[ "$check_date" -ge 6 ]] && [[ "$check_date" -le 18 ]]; then
+            echo ""
+        else
+            echo ""
+        fi
+        ;;
+    "1003")
+        if [[ "$check_date" -ge 6 ]] && [[ "$check_date" -le 18 ]]; then
+            echo ""
+        else
+            echo ""
+        fi
+        ;;
+    "1006" | "1009")
+        echo "󰅟"
+        ;;
+    "1030" | "1135")
+        if [[ "$check_date" -ge 6 ]] && [[ "$check_date" -le 18 ]]; then
+            echo ""
+        else
+            echo ""
+        fi
+        ;;
+    "1063" | "1087" | "1180" | "1186" | "1192" | "1240")
+        if [[ "$check_date" -ge 6 ]] && [[ "$check_date" -le 18 ]]; then
+            echo ""
+        else
+            echo ""
+        fi
+        ;;
+    "1150" | "1153" | "1171")
+        echo ""
+        ;;
+    "1189" | "1183" | "1195")
+        echo ""
+        ;;
+    *)
+        echo ""
+        ;;
+    esac
+}
+
+## Extract data
+get_weather_forecast_data() {
+    weather=$(curl -sf "$PROTOCOL://api.weatherapi.com/v1/forecast.json?key=$KEY&q=$LONG&days=$FORCAST_DAYS&aqi=$AIR_QUALITY&alerts=$ALERTS")
+
+    if [ ! -z "$weather" ]; then
+        ## Current details
+        weather_temp_current=$(echo $weather | jq ".current.temp_c" | cut -d "." -f 1)
+        weather_stat_current=$(echo $weather | jq ".current.condition.text")
+        weather_wind_speed_current=$(echo $weather | jq ".current.wind_kph" | cut -d "." -f 1)
+        weather_wind_direction_current=$(echo $weather | jq ".current.wind_dir" | tr -d '"')
+        weather_humid_current=$(echo $weather | jq ".current.humidity")
+        weather_code_icon_current=$(echo $weather | jq ".current.condition.code")
+
+        ## Day 1
+        weather_temp_max_day1=$(echo $weather | jq '.forecast.forecastday[0].day.maxtemp_c' | cut -d "." -f 1)
+        weather_temp_min_day1=$(echo $weather | jq '.forecast.forecastday[0].day.mintemp_c' | cut -d "." -f 1)
+        weather_code_icon_day1=$(echo $weather | jq '.forecast.forecastday[0].day.condition.code')
+
+        ## Day 2
+        weather_temp_max_day2=$(echo $weather | jq '.forecast.forecastday[1].day.maxtemp_c' | cut -d "." -f 1)
+        weather_temp_min_day2=$(echo $weather | jq '.forecast.forecastday[1].day.mintemp_c' | cut -d "." -f 1)
+        weather_code_icon_day2=$(echo $weather | jq '.forecast.forecastday[1].day.condition.code')
+
+        ## Day 3
+        weather_temp_max_day3=$(echo $weather | jq '.forecast.forecastday[2].day.maxtemp_c' | cut -d "." -f 1)
+        weather_temp_min_day3=$(echo $weather | jq '.forecast.forecastday[2].day.mintemp_c' | cut -d "." -f 1)
+        weather_code_icon_day3=$(echo $weather | jq '.forecast.forecastday[2].day.condition.code')
+
+        ## Day 4
+        weather_temp_max_day4=$(echo $weather | jq '.forecast.forecastday[3].day.maxtemp_c' | cut -d "." -f 1)
+        weather_temp_min_day4=$(echo $weather | jq '.forecast.forecastday[3].day.mintemp_c' | cut -d "." -f 1)
+        weather_code_icon_day4=$(echo $weather | jq '.forecast.forecastday[3].day.condition.code')
+
+        ## Day 5
+        weather_temp_max_day5=$(echo $weather | jq '.forecast.forecastday[4].day.maxtemp_c' | cut -d "." -f 1)
+        weather_temp_min_day5=$(echo $weather | jq '.forecast.forecastday[4].day.mintemp_c' | cut -d "." -f 1)
+        weather_code_icon_day5=$(echo $weather | jq '.forecast.forecastday[4].day.condition.code')
+
+        ## Get icon
+        icon_weather_current=$(get_icon_weather $weather_code_icon_current)
+        icon_weather_day1=$(get_icon_weather $weather_code_icon_day1)
+        icon_weather_day2=$(get_icon_weather $weather_code_icon_day2)
+        icon_weather_day3=$(get_icon_weather $weather_code_icon_day3)
+        icon_weather_day4=$(get_icon_weather $weather_code_icon_day4)
+        icon_weather_day5=$(get_icon_weather $weather_code_icon_day5)
+
+        tooltip_wind_direction=$(get_full_length_wind_direction $weather_wind_direction_current)
+
+        ## Assign value for current weather
+        echo "$icon_weather_current" >${cache_weather_icon_current}
+        echo "$weather_stat_current" >${cache_weather_stat_current}
+        echo "$weather_wind_direction_current" >${cache_weather_wind_direction_current}
+        echo "$tooltip_wind_direction" >${cache_weather_tooltip_wind_direction_current}
+        echo "$weather_wind_speed_current" >${cache_weather_wind_speed_current}
+        echo "$weather_humid_current" >${cache_weather_humid_current}
+        echo "$weather_temp_current" >${cache_weather_temp_current}
+
+        ## Assign value for forecast weather
+        ## Day 1
+        echo "$weather_temp_max_day1" >${cache_weather_temp_max_day1}
+        echo "$weather_temp_min_day1" >${cache_weather_temp_min_day1}
+        echo "$icon_weather_day1" >${cache_weather_icon_day1}
+
+        ## Day 2
+        echo "$weather_temp_max_day2" >${cache_weather_temp_max_day2}
+        echo "$weather_temp_min_day2" >${cache_weather_temp_min_day2}
+        echo "$icon_weather_day2" >${cache_weather_icon_day2}
+
+        ## Day 3
+        echo "$weather_temp_max_day3" >${cache_weather_temp_max_day3}
+        echo "$weather_temp_min_day3" >${cache_weather_temp_min_day3}
+        echo "$icon_weather_day3" >${cache_weather_icon_day3}
+
+        ## Day 4
+        echo "$weather_temp_max_day4" >${cache_weather_temp_max_day4}
+        echo "$weather_temp_min_day4" >${cache_weather_temp_min_day4}
+        echo "$icon_weather_day4" >${cache_weather_icon_day4}
+
+        ## Day 5
+        echo "$weather_temp_max_day5" >${cache_weather_temp_max_day5}
+        echo "$weather_temp_min_day5" >${cache_weather_temp_min_day5}
+        echo "$icon_weather_day5" >${cache_weather_icon_day5}
+    else
+        echo "-" >${cache_weather_stat_current}
+        echo "-" >${cache_weather_icon_current}
+        echo "-" >${cache_weather_wind_direction_current}
+        echo "-" >${cache_weather_wind_speed_current}
+        echo "-" >${cache_weather_humid_current}
+        echo "-" >${cache_weather_temp_current}
+    fi
+}
+
+get_weather_forecast_data

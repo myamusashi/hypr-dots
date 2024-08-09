@@ -1,0 +1,21 @@
+.workspaces-widget {
+  .workspace-entry {
+    transition: 350ms;
+    border-radius: 2rem;
+    margin: 2px 5px;
+  }
+
+  .workspaces-text {
+    font-size: 18px;
+    font-family: JetBrainsMono Nerd Font;
+    color: $text;
+
+    &.occupied,
+    &.current,
+    &.empty { min-width: 16px; }
+
+    &.occupied { color: mix($base, $blue-morning, 45%); }
+    &.current { color: mix($blue-morning, $sapphire, 40%); }
+    &.empty { color: $surface0; }
+  }
+}

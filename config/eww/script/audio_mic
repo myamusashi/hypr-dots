@@ -1,0 +1,39 @@
+#!/bin/bash
+
+sound_volume=$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%')
+check_sound=$(amixer -D pulse sget Master | grep 'Front Left: ' | awk '{print $6}' | tr -d '\[[]\]')
+
+mic_volume=$(amixer -D pulse sget Capture | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%')
+check_mic=$(amixer -D pulse sget Capture | grep 'Front Left: ' | awk '{print $6}' | tr -d '\[[]\]')
+
+sound_icon() {
+  if [[ $sound_volume -ge 80 ]] && [[ ! "$check_sound" == "off" ]]; then
+    echo ""
+  elif [[ $sound_volume -ge 49 ]] && [[ ! "$check_sound" == "off" ]]; then
+    echo "󰕾"
+  elif [[ $sound_volume -ge 10 ]] && [[ ! "$check_sound" == "off" ]]; then
+    echo "󰖀"
+  elif [[ $sound_volume -eq 0 ]] && [[ ! "$check_sound" == "off" ]]; then
+    echo "󰕿"
+  else
+    echo "󰸈"
+  fi
+}
+
+mic_icon() {
+  if [[ ! "$check_mic" == "off" ]]; then
+    echo "" 
+  else
+    echo ""
+  fi
+}
+
+if [ "$1" = "--get-sound-icon" ]; then
+  sound_icon
+elif [ "$1" = "--get-sound" ]; then
+  sound_perc
+elif [ "$1" = "--get-mic-icon" ]; then
+  mic_icon
+elif [ "$1" = "--get-mic" ]; then
+  mic_perc
+fi

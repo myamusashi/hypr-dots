@@ -1,0 +1,45 @@
+#!/bin/bash
+
+cache_dir="$HOME/.config/eww/script/data"
+package_name="${cache_dir}/package.txt"
+old_package="${cache_dir}/old_package.txt"
+new_package="${cache_dir}/new_package.txt"
+
+get_package_data() {
+  input=$(checkupdates --nocolor)
+
+  if [[ ! -z $input ]]; then
+    package=$(echo "$input" | awk '{print "  "$1":"}')  
+    old_version=$(echo "$input" | awk '{print $2"  -> "}')  
+    new_version=$(echo "$input" | awk '{print $4}')
+  
+    [ -e "$package_name" ] && rm -f "$package_name"
+    [ -e "$old_package" ] && rm -f "$old_package"
+    [ -e "$new_package" ] && rm -f "$new_package"  
+
+    echo -e "$package" >> "$package_name"
+    echo -e "$old_version" >> "$old_package" 
+    echo -e "$new_version" >> "$new_package"
+  else
+    package=$(echo "No")  
+    old_version=$(echo "Packages")  
+    new_version=$(echo "Update")
+  
+    [ -e "$package_name" ] && rm -f "$package_name"
+    [ -e "$old_package" ] && rm -f "$old_package"
+    [ -e "$new_package" ] && rm -f "$new_package"  
+
+    echo -e "$package" >> "$package_name"
+    echo -e "$old_version" >> "$old_package" 
+    echo -e "$new_version" >> "$new_package"
+  fi
+}
+
+get_package_data
+if [[ "$1" == "--package-name" ]]; then
+    cat "${package_name}"
+elif [[ "$1" == "--old-version-package" ]]; then
+    cat "${old_package}"
+elif [[ "$1" == "--new-version-package" ]]; then
+    cat "${new_package}"
+fi

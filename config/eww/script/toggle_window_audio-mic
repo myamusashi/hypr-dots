@@ -1,0 +1,27 @@
+#!/bin/bash
+
+state=$(eww get window-mic_audio)
+
+open_tray() {
+    if [[ -z $(eww list-windows | grep '*window_mic-audio') ]]; then
+        eww open window_mic-audio
+    fi
+    eww update window-mic_audio=true
+}
+
+close_tray() {
+    eww update window-mic_audio=false
+}
+
+case $1 in
+    close)
+        close_tray
+        exit 0 ;;
+esac
+
+case $state in
+    true)
+        close_tray ;;
+    false)
+        open_tray ;;
+esac
